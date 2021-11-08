@@ -1,1 +1,1 @@
-# stacks-java-core-api
+# stacks-java-core-api module
