@@ -8,12 +8,21 @@
 
 .gradle
 
-target/
-java/src/build/
-java/src/.classpath
-java/src/.project
-java/src/.settings/
+java/target/
+api-tests/target
+java/build/
+java/.classpath
+java/.project
+java/.settings/
+
+.terraform
 
 node_modules/
+/api-tests-karate/target/
 /.idea/
+target/
 reports/
+
+java/emulatorcert.crt
+
+*.crt
