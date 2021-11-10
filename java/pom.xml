@@ -15,6 +15,15 @@
     <name>stacks-core-api</name>
     <description>Core API components for the Java Stacks solution</description>
 
+    <repositories>
+        <repository>
+            <snapshots/>
+            <id>snapshots</id>
+            <name>default-maven-virtual</name>
+            <url>https://amidostacks.jfrog.io/artifactory/default-maven-virtual</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.springdoc</groupId>
