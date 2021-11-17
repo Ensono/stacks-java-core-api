@@ -26,7 +26,7 @@ resources:
       type: github
       name: amido/stacks-pipeline-templates
       # TODO Update to the main branch, once changes are published
-      ref: feature/yml-template
+      ref: feature/java-modules-templates
       # EXCHANGE THIS FOR YOUR OWN ENDPOINT CONNECTION TO GITHUB
       # REPOSITORY IS PUBLIC
       endpoint: amidostacks
