@@ -5,9 +5,9 @@
 <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.amido</groupId>
-        <artifactId>stacks-java-module-parent</artifactId>
-        <version>0.0.14-main</version>
+        <groupId>com.amido.stacks.modules</groupId>
+        <artifactId>stacks-modules-parent</artifactId>
+        <version>0.0.18-main</version>
     </parent>
 
     <artifactId>stacks-core-api</artifactId>
