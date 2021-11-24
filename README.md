@@ -47,7 +47,7 @@ There are three ways to integrate this module in your project:
 - Clone this repo, build and used as a Maven module
 - Clone this repo, create a custom archetype and then use it as a Maven module
 
-###Maven dependency
+### Maven dependency
 
 Our artifacts are deployed on an Artifactory repository, to use them you will need to add that repo
 in your `pom.xml`:
@@ -93,7 +93,7 @@ Then, in the `dependencies` section of your `pom.xml` add:
 Then you can do a `./mvnw clean compile -Partifactory` to fetch it; after that you can use it like any
 other dependency.
 
-###Building the module locally
+### Building the module locally
 
 If you wish to make changes to the module you can clone this repo, navigate to the `java` folder and
 run `./mvnw clean install` to install the module locally. Then you can add it as any other dependency,
@@ -101,7 +101,7 @@ keep in mind that if you previously used the binary and have the configuration f
 dependency](#maven-dependency) instructions above, you'll need to remove it to make your build tool 
 to pick up the locally installed module.
 
-###Using Archetypes and custom namespaces
+### Using Archetypes and custom namespaces
 
 If you wish to further customise the module to have your organisation's namespaces, you can create a 
 [Maven archetype](https://maven.apache.org/archetype/index.html). Aechetypes are Maven's tool for
