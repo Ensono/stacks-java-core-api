@@ -70,23 +70,23 @@ Alternatively, you can also add this configuration as a profile in your Maven's 
 in the `.m2` folder in your home directory (any OS):
 
 ```xml
-    <profiles>
-        <profile>
-            <repositories>
-                <repository>
-                  <snapshots/>
-                  <id>snapshots</id>
-                  <name>default-maven-virtual</name>
-                  <url>https://amidostacks.jfrog.io/artifactory/default-maven-virtual</url>
-                </repository>
-            </repositories>
-            <id>artifactory</id>
-        </profile>
-    </profiles>
-    
-    <activeProfiles>
-        <activeProfile>artifactory</activeProfile>
-    </activeProfiles>
+<profiles>
+    <profile>
+        <repositories>
+            <repository>
+                <snapshots/>
+                <id>snapshots</id>
+                <name>default-maven-virtual</name>
+                <url>https://amidostacks.jfrog.io/artifactory/default-maven-virtual</url>
+            </repository>
+        </repositories>
+        <id>artifactory</id>
+    </profile>
+</profiles>
+
+<activeProfiles>
+    <activeProfile>artifactory</activeProfile>
+</activeProfiles>
 ```
 
 ### Dependency
@@ -96,11 +96,11 @@ in the `.m2` folder in your home directory (any OS):
 In the `dependencies` section of your application's `pom.xml` add:
 
 ```xml
-    <dependency>
-        <groupId>com.amido.stacks.modules</groupId>
-        <artifactId>stacks-core-api</artifactId>
-        <version>TODO</version>
-    </dependency>
+<dependency>
+    <groupId>com.amido.stacks.modules</groupId>
+    <artifactId>stacks-core-api</artifactId>
+    <version>TODO</version>
+</dependency>
 ```
 
 Then you can do a `./mvnw clean compile` to fetch it; after that, you can use it like any other
@@ -121,14 +121,14 @@ To use the deployed archetypes:
 2.  Then run
 
     ``` bash
-        mvn archetype:generate \
-            -DarchetypeGroupId='com.amido.stacks.modules' \
-            -DarchetypeArtifactId='stacks-core-api-archetype' \
-            -DarchetypeVersion='<archetype version>' \
-            -DgroupId='<your-group-id>' \
-            -DartifactId='<your-artifact-id>' \
-            -Dversion='<your-version>' \
-            -Dpackage='<package-name>'
+    mvn archetype:generate \
+        -DarchetypeGroupId='com.amido.stacks.modules' \
+        -DarchetypeArtifactId='stacks-core-api-archetype' \
+        -DarchetypeVersion='<archetype version>' \
+        -DgroupId='<your-group-id>' \
+        -DartifactId='<your-artifact-id>' \
+        -Dversion='<your-version>' \
+        -Dpackage='<package-name>'
     ```
 
     -  `<your-group-id>` is a placeholder for your group ID
