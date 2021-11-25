@@ -44,14 +44,14 @@ deploy.
 
 There are four ways to integrate this module in your project:
 - Use it as a [Maven dependency](#maven-dependency)
-- Create a localized solution using [Maven Archetypes artifacts](#localized-solution-using-maven-archetypes)
+- Create a localized solution using [Maven Archetypes artifacts](#localized-solution-using-maven-archetypes) available in our Artifactory repo
 - Clone this repo, [locally build](#building-the-module-locally) and used as a Maven dependency
 - Clone this repo, create a [custom archetype](#creating-an-archetype) and then use it as a Maven dependency
 
 ### Accessing Artifactory
 
-Our artifacts and archetypes are hosted on an Artifactory repository, to use either, you will need 
-to add that repo in your `pom.xml`:
+Our artifacts and archetypes are hosted on an Artifactory repository. To use either, from a project
+other than Amido Stacks, you will need to add that repo in your `pom.xml`:
     
     <repositories>
         <repository>
@@ -83,7 +83,6 @@ in the `.m2` folder in your home directory (any OS):
         <activeProfile>artifactory</activeProfile>
     </activeProfiles>
 
-
 ### Maven dependency
 
 In the `dependencies` section of your application's `pom.xml` add:
@@ -91,7 +90,7 @@ In the `dependencies` section of your application's `pom.xml` add:
     <dependency>
         <groupId>com.amido.stacks.modules</groupId>
         <artifactId>stacks-core-api</artifactId>
-        <version>${stacks.core.api.version}</version>
+        <version>TODO</version>
     </dependency>
 
 Then you can do a `./mvnw clean compile -Partifactory` to fetch it; after that you can use it like any
@@ -105,7 +104,7 @@ scaffolding and offer a lot of functionality, we suggest spending some time look
 the Archetypes to create a template for you to adopt this module under your organisation's namespace.
 To use the deployed archetypes:
 1. Make and move to a new folder
-2. Then run `mvn archetype:generate -Partifactory -DarchetypeGroupId='com.amido.stacks.modules' -DarchetypeArtifactId='stacks-core-api-archetype' -DarchetypeVersion='<archetype version>' -DgroupId='<your-group-id>' -DartifactId='<your-artifact-id>' -Dversion='<your-version>' -Dpackage='<package-name>'`
+2. Then run `mvn archetype:generate -DarchetypeGroupId='com.amido.stacks.modules' -DarchetypeArtifactId='stacks-core-api-archetype' -DarchetypeVersion='<archetype version>' -DgroupId='<your-group-id>' -DartifactId='<your-artifact-id>' -Dversion='<your-version>' -Dpackage='<package-name>'`
    1. `<your-group-id>` is a placeholder for your group ID
    2. `<your-artifact-id>` is a placeholder for your artifact ID
    3. `<your-version>` is a placeholder for your version
@@ -129,9 +128,6 @@ To build the module locally:
 3. run `./mvnw clean install` to install the module locally.
 4. Add it as any other [Maven dependency](#maven-dependency)
 
->**If you previously used the [Artifactory repo](#accessing-artifactory) instructions above:** 
-> You need to revert those changes to make your build tool pick the locally installed module.
-
 ### Creating an Archetype
 
 If you wish to further customise the module to have your organisation's namespaces, you can create a 
@@ -141,11 +137,11 @@ To make, install and use an archetype follow these steps:
 1. Clone this repo
 2. Navigate to the `<directory you cloned the project into>/java` in the terminal
 3. Then issue the following Maven commands, using the included wrapper:
-    1. ``./mvnw archetype:create-from-project -DpropertyFile='./archetype.properties'`` - To create the archetype
-    2. `` cd target/generated-sources/archetype`` - Navigate to the folder it was crated in
-    3. ``..\..\..\mvnw install`` - Install the archetype locally
+    1. `./mvnw archetype:create-from-project -DpropertyFile='./archetype.properties'` - To create the archetype
+    2. `cd target/generated-sources/archetype` - Navigate to the folder it was crated in
+    3. `..\..\..\mvnw install` - Install the archetype locally
 4. Make and navigate to a directory in which you'd like to crate the localized project into, ideally outside this project's root folder
-5. To create the project we do ``<path-to-mvn-executable>/mvnw archetype:generate -DarchetypeGroupId='com.amido' -DarchetypeArtifactId='stacks-core-api' -DarchetypeVersion='1.0.0-SNAPSHOT' -DgroupId='<your-group-id>' -DartifactId='<your-artifact-id>' -Dversion='<your-version>' -Dpackage='<package-name>'``
+5. To create the project we do `<path-to-mvn-executable>/mvnw archetype:generate -DarchetypeGroupId='com.amido' -DarchetypeArtifactId='stacks-core-api' -DarchetypeVersion='1.0.0-SNAPSHOT' -DgroupId='<your-group-id>' -DartifactId='<your-artifact-id>' -Dversion='<your-version>' -Dpackage='<package-name>'`
     1. `<your-group-id>` is a placeholder for your group ID
     2. `<your-artifact-id>` is a placeholder for your artifact ID
     3. `<your-version>` is a placeholder for your version
