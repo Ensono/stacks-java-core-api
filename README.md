@@ -42,11 +42,11 @@ deploy.
 
 ## How to use
 
-There are three ways to integrate this module in your project:
-- Use it as a Maven dependency
-- Create a localized solution using Maven Archetypes artifacts
-- Clone this repo, build and used as a Maven module
-- Clone this repo, create a custom archetype and then use it as a Maven module
+There are four ways to integrate this module in your project:
+- Use it as a [Maven dependency](#maven-dependency)
+- Create a localized solution using [Maven Archetypes artifacts](#localized-solution-using-maven-archetypes)
+- Clone this repo, [locally build](#building-the-module-locally) and used as a Maven dependency
+- Clone this repo, create a [custom archetype](#creating-an-archetype) and then use it as a Maven dependency
 
 ### Accessing Artifactory
 
@@ -101,9 +101,25 @@ other dependency.
 
 If you wish to further customise the module to have your organisation's namespaces, you can create a
 [Maven archetype](https://maven.apache.org/archetype/index.html). Archetypes are Maven's tool for
-scaffolding and offer a lot of functionality, we suggest spending some time looking into them.
+scaffolding and offer a lot of functionality, we suggest spending some time looking into them. We use
+the Archetypes to create a template for you to adopt this module under your organisation's namespace.
 To use the deployed archetypes:
-1. 
+1. Make and move to a new folder
+2. Then run `mvn archetype:generate -Partifactory -DarchetypeGroupId='com.amido.stacks.modules' -DarchetypeArtifactId='stacks-core-api-archetype' -DarchetypeVersion='<archetype version>' -DgroupId='<your-group-id>' -DartifactId='<your-artifact-id>' -Dversion='<your-version>' -Dpackage='<package-name>'`
+   1. `<your-group-id>` is a placeholder for your group ID
+   2. `<your-artifact-id>` is a placeholder for your artifact ID
+   3. `<your-version>` is a placeholder for your version
+   4. `<package-name>` is a placeholder for the root package name and structure. It should start with your `groupdId` and continue with the name of the root package.
+      1. For example, using `-DgroupId=com.test` and `-Dpackage=com.test.stacks` will instruct Maven to place the code in `src/main/java/com/test/stacks` and update all the relevant references accordingly (i.e. `imports`)
+3. Go to the `pom.xml` file of the project you'll be using this module in and add it as a [Maven
+   dependency](#maven-dependency)
+
+**Example**: Using `-DgroupId=com.test` and `-Dpackage=com.test.stacks` will instruct Maven to place the code in `src/main/java/com/test/stacks` and update all the relevant references accordingly (i.e. `imports`)
+
+> **If you previously had used this module under different namespace (i.e. the default `com.amido.stacks.core-api`):**
+> Maven updates the imports for the module you generated ONLY. Any existing references in other
+> projects will remain to the previous namespace, you will need to update them manually, or by simply
+> deleting the relevant `import` statements and re-importing using the newly made module instead.
 
 ### Building the module locally
 
@@ -116,7 +132,7 @@ To build the module locally:
 >**If you previously used the [Artifactory repo](#accessing-artifactory) instructions above:** 
 > You need to revert those changes to make your build tool pick the locally installed module.
 
-### Using Archetypes and custom namespaces
+### Creating an Archetype
 
 If you wish to further customise the module to have your organisation's namespaces, you can create a 
 [Maven archetype](https://maven.apache.org/archetype/index.html). Archetypes are Maven's tool for
@@ -138,8 +154,10 @@ To make, install and use an archetype follow these steps:
 6. Go to the `pom.xml` file of the project you'll be using this module in and add it as a [Maven
    dependency](#maven-dependency)
 
+**Example**: Using `-DgroupId=com.test` and `-Dpackage=com.test.stacks` will instruct Maven to place the code in `src/main/java/com/test/stacks` and update all the relevant references accordingly (i.e. `imports`)
+
 > **If you previously had used this module under different namespace (i.e. the default `com.amido.stacks.core-api`):**
 > Maven updates the imports for the module you generated ONLY. Any existing references in other 
-> projects will remain to the previous namespace, you will need to update them manuallu, or by simply
+> projects will remain to the previous namespace, you will need to update them manually, or by simply
 > deleting the relevant `import` statements and re-importing using the newly made module instead.
 
