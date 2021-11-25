@@ -50,46 +50,7 @@ There are four ways to integrate this module into your project:
 -  Clone this repo, [locally build](#building-the-module-locally) and use it as a Maven dependency
 -  Clone this repo, create a [custom archetype](#creating-an-archetype) and then use it as a Maven dependency
 
-### Accessing Artifactory
-
-Our artefacts and archetypes get hosted on an Artifactory repository. To use either, from a project
-other than Amido Stacks, you will need to add that repo in your `pom.xml`:
-
-```xml
-<repositories>
-    <repository>
-        <snapshots />
-        <id>snapshots</id>
-        <name>default-maven-virtual</name>
-        <url>https://amidostacks.jfrog.io/artifactory/default-maven-virtual</url>
-    </repository>
-</repositories>
-```
-
-Alternatively, you can also add this configuration as a profile in your Maven's `settings.xml` file
-in the `.m2` folder in your home directory (any OS):
-
-```xml
-<profiles>
-    <profile>
-        <repositories>
-            <repository>
-                <snapshots/>
-                <id>snapshots</id>
-                <name>default-maven-virtual</name>
-                <url>https://amidostacks.jfrog.io/artifactory/default-maven-virtual</url>
-            </repository>
-        </repositories>
-        <id>artifactory</id>
-    </profile>
-</profiles>
-
-<activeProfiles>
-    <activeProfile>artifactory</activeProfile>
-</activeProfiles>
-```
-
-### Dependency
+### Use it as a dependency
 
 #### Maven
 
@@ -103,8 +64,11 @@ In the `dependencies` section of your application's `pom.xml` add:
 </dependency>
 ```
 
-Then you can do a `./mvnw clean compile` to fetch it; after that, you can use it like any other
-dependency.
+Then you can do a `./mvnw clean compile` to fetch it; after that, you can use it like any other dependency.
+
+```bash
+./mvnw clean compile
+```
 
 #### Others
 
@@ -149,10 +113,10 @@ To use the deployed archetypes:
 > You will need to
 >
 >-  Update them manually
->-  Re-create the relevant `import` statements to use the new-made module instead.
+>-  Re-create the relevant `import` statements to use the new-made module instead
 >-  If you plan to use this with Amido Stacks, include your namespace in the `@ComponentScan` annotation of the `Application` class.
 
-### Building the module locally
+### Building the module locally from this repository
 
 To build the module locally:
 
@@ -161,7 +125,7 @@ To build the module locally:
 3.  run `./mvnw clean install` to install the module locally.
 4.  Add it as any other [dependency](#dependency)
 
-### Creating an Archetype
+### Creating an Archetype from this repository
 
 If you wish to customise the module and use your organisation's namespaces instead of Amido's. You can create a
 [Maven archetype](https://maven.apache.org/archetype/index.html). Archetype is Maven's tool for
@@ -189,6 +153,7 @@ To build, install and use the archetype follow these steps:
         ```bash
         ..\..\..\mvnw install
         ```
+
 4.  Make and navigate to a directory in which you'd like to create the localized project, ideally outside this project's root folder
 5.  To create the project, use the command below:
 
@@ -219,5 +184,44 @@ To build, install and use the archetype follow these steps:
 > You will need to
 >
 >-  Update them manually
->-  Re-create the relevant `import` statements to use the new-made module instead.
+>-  Re-create the relevant `import` statements to use the new-made module instead
 >-  If you plan to use this with Amido Stacks, include your namespace in the `@ComponentScan` annotation of the `Application` class.
+
+## Accessing Artifactory
+
+Our artefacts and archetypes get hosted on an Artifactory repository. To use either, from a project
+other than Amido Stacks, you will need to add that repo in your `pom.xml`:
+
+```xml
+<repositories>
+    <repository>
+        <snapshots />
+        <id>snapshots</id>
+        <name>default-maven-virtual</name>
+        <url>https://amidostacks.jfrog.io/artifactory/default-maven-virtual</url>
+    </repository>
+</repositories>
+```
+
+Alternatively, you can also add this configuration as a profile in your Maven's `settings.xml` file
+in the `.m2` folder in your home directory (any OS):
+
+```xml
+<profiles>
+    <profile>
+        <repositories>
+            <repository>
+                <snapshots/>
+                <id>snapshots</id>
+                <name>default-maven-virtual</name>
+                <url>https://amidostacks.jfrog.io/artifactory/default-maven-virtual</url>
+            </repository>
+        </repositories>
+        <id>artifactory</id>
+    </profile>
+</profiles>
+
+<activeProfiles>
+    <activeProfile>artifactory</activeProfile>
+</activeProfiles>
+```
