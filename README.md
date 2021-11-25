@@ -44,13 +44,14 @@ deploy.
 
 There are three ways to integrate this module in your project:
 - Use it as a Maven dependency
+- Create a localized solution using Maven Archetypes artifacts
 - Clone this repo, build and used as a Maven module
 - Clone this repo, create a custom archetype and then use it as a Maven module
 
-### Maven dependency
+### Accessing Artifactory
 
-Our artifacts are deployed on an Artifactory repository, to use them you will need to add that repo
-in your `pom.xml`:
+Our artifacts and archetypes are hosted on an Artifactory repository, to use either, you will need 
+to add that repo in your `pom.xml`:
     
     <repositories>
         <repository>
@@ -82,7 +83,10 @@ in the `.m2` folder in your home directory (any OS):
         <activeProfile>artifactory</activeProfile>
     </activeProfiles>
 
-Then, in the `dependencies` section of your `pom.xml` add:
+
+### Maven dependency
+
+In the `dependencies` section of your application's `pom.xml` add:
 
     <dependency>
         <groupId>com.amido.stacks.modules</groupId>
@@ -93,20 +97,31 @@ Then, in the `dependencies` section of your `pom.xml` add:
 Then you can do a `./mvnw clean compile -Partifactory` to fetch it; after that you can use it like any
 other dependency.
 
+### Localized solution using Maven Archetypes
+
+If you wish to further customise the module to have your organisation's namespaces, you can create a
+[Maven archetype](https://maven.apache.org/archetype/index.html). Archetypes are Maven's tool for
+scaffolding and offer a lot of functionality, we suggest spending some time looking into them.
+To use the deployed archetypes:
+1. 
+
 ### Building the module locally
 
-If you wish to make changes to the module you can clone this repo, navigate to the `java` folder and
-run `./mvnw clean install` to install the module locally. Then you can add it as any other dependency,
-keep in mind that if you previously used the binary and have the configuration from the [Maven
-dependency](#maven-dependency) instructions above, you'll need to remove it to make your build tool 
-to pick up the locally installed module.
+To build the module locally:
+1. Clone this repo
+2. Navigate to the `java` folder
+3. run `./mvnw clean install` to install the module locally.
+4. Add it as any other [Maven dependency](#maven-dependency)
+
+>**If you previously used the [Artifactory repo](#accessing-artifactory) instructions above:** 
+> You need to revert those changes to make your build tool pick the locally installed module.
 
 ### Using Archetypes and custom namespaces
 
 If you wish to further customise the module to have your organisation's namespaces, you can create a 
-[Maven archetype](https://maven.apache.org/archetype/index.html). Aechetypes are Maven's tool for
-scaffolding and offer a lot of functionality, we'd suggest spending some time looking into them.
-To make and install an archetype follow these steps:
+[Maven archetype](https://maven.apache.org/archetype/index.html). Archetypes are Maven's tool for
+scaffolding and offer a lot of functionality, we suggest spending some time looking into them.
+To make, install and use an archetype follow these steps:
 1. Clone this repo
 2. Navigate to the `<directory you cloned the project into>/java` in the terminal
 3. Then issue the following Maven commands, using the included wrapper:
@@ -119,7 +134,7 @@ To make and install an archetype follow these steps:
     2. `<your-artifact-id>` is a placeholder for your artifact ID
     3. `<your-version>` is a placeholder for your version
     4. `<package-name>` is a placeholder for the root package name and structure. It should start with your `groupdId` and continue with the name of the root package.
-        1. For example, using `-DgroupId=com.test` and `Dpackage=com.test.stacks` will instruct Maven to place the code in `src/main/java/com/test/stacks` and update all the relevant references accordingly (i.e. `imports`)
+        1. For example, using `-DgroupId=com.test` and `-Dpackage=com.test.stacks` will instruct Maven to place the code in `src/main/java/com/test/stacks` and update all the relevant references accordingly (i.e. `imports`)
 6. Go to the `pom.xml` file of the project you'll be using this module in and add it as a [Maven
    dependency](#maven-dependency)
 
