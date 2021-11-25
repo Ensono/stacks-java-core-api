@@ -25,8 +25,8 @@ resources:
     - repository: templates
       type: github
       name: amido/stacks-pipeline-templates
-      # ref: maven-install-for-modules
-      ref: feature/yml-template
+      # TODO Update to the main branch, once changes are published
+      ref: feature/java-modules-templates
       # EXCHANGE THIS FOR YOUR OWN ENDPOINT CONNECTION TO GITHUB
       # REPOSITORY IS PUBLIC
       endpoint: amidostacks
@@ -55,6 +55,7 @@ stages:
       # You can find notes in the READMEs around which values to use for each ENV variable group
       - group: stacks-credentials-nonprod-kv
       - group: amido-stacks-java-modules
+      - group: amido-stacks-java-modules-api
     jobs:
       # Compile, test and deploy to an artifact repository the Java module
       - job: ModuleBuild
@@ -71,7 +72,7 @@ stages:
             displayName: 'Update: Build Number'
 
           # Validates all YAML files in the repo to check they adhere to standards
-          - template: templates/java-modules/test-validate-yaml.yml@templates
+          - template: azDevOps/azure/templates/steps/java/test-validate-yaml.yml@templates
             parameters:
               pipeline_scripts_directory: "${{ variables.self_pipeline_scripts_dir }}"
               container: "k8s_deploy"
@@ -79,7 +80,7 @@ stages:
               yamllint_scan_directory: "${{ variables.yamllint_scan_directory }}"
 
           # Builds the Java app, runs tests and deploy to the artifact repository
-          - template: templates/java-modules/build-java.yml@templates
+          - template: azDevOps/azure/templates/steps/java/build-java.yml@templates
             parameters:
               repo_root_dir: "${{ variables.self_repo_dir }}"
               project_root_dir: "${{ variables.self_project_dir }}"
@@ -88,7 +89,7 @@ stages:
               maven_cache_directory: "${{ variables.maven_cache_directory }}"
               maven_surefire_reports_dir: "${{ variables.maven_surefire_reports_dir }}"
               maven_allowed_test_tags: "${{ variables.maven_allowed_test_tags}}"
-              maven_package_version: "${{ variables.docker_image_tag }}"
+              maven_package_version: "${{ variables.maven_package_version }}"
               maven_settings_file: "${{ variables.maven_settings_file }}"
               # Artifactory
               artifactory_username: "$(artifactory-username)"
@@ -101,7 +102,7 @@ stages:
               project_type: "${{ variables.java_project_type }}"
 
           # Performs static code analysis, such as Sonar Cloud
-          - template: templates/java-modules/test-static-code-analysis.yml@templates
+          - template: azDevOps/azure/templates/steps/java/test-static-code-analysis.yml@templates
             parameters:
               project_root_dir: "${{ variables.self_project_dir }}"
               pipeline_scripts_directory: "${{ variables.self_pipeline_scripts_dir}}"
@@ -125,7 +126,7 @@ stages:
               docker_image_tag: "${{ variables.docker_image_tag }}"
 
           # Post build tasks, such as Test and Coverage upload, and publishing artefacts
-          - template: templates/java-modules/post-build-tasks.yml@templates
+          - template: azDevOps/azure/templates/steps/java/post-build-tasks.yml@templates
             parameters:
               project_root_dir: "${{ variables.self_project_dir }}"
               functional_test_project_root_dir: "${{ variables.self_functional_testproject_dir }}"
@@ -161,7 +162,7 @@ stages:
             displayName: 'Update: Build Number'
 
           # Validates all YAML files in the repo to check they adhere to standards
-          - template: templates/java-modules/test-validate-yaml.yml@templates
+          - template: azDevOps/azure/templates/steps/java/test-validate-yaml.yml@templates
             parameters:
               pipeline_scripts_directory: "${{ variables.self_pipeline_scripts_dir }}"
               container: "k8s_deploy"
@@ -169,7 +170,7 @@ stages:
               yamllint_scan_directory: "${{ variables.yamllint_scan_directory }}"
 
           # Builds the Java archetype and deploy to the artifact repository
-          - template: templates/java-modules/build-java-archetype.yml@templates
+          - template: azDevOps/azure/templates/steps/java/build-java-archetype.yml@templates
             parameters:
               repo_root_dir: "${{ variables.self_repo_dir }}"
               project_root_dir: "${{ variables.self_project_dir }}"
@@ -178,7 +179,7 @@ stages:
               maven_cache_directory: "${{ variables.maven_cache_directory }}"
               maven_surefire_reports_dir: "${{ variables.maven_surefire_reports_dir }}"
               maven_allowed_test_tags: "${{ variables.maven_allowed_test_tags}}"
-              maven_package_version: "${{ variables.docker_image_tag }}"
+              maven_package_version: "${{ variables.maven_package_version }}"
               maven_pom_file: "${{ variables.maven_archetype_pom_file }}"
               maven_archetype_properties_file: "${{ variables.maven_archetype_properties_file }}"
               maven_settings_file: "${{ variables.maven_settings_file }}"

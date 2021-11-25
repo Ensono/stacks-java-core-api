@@ -86,6 +86,8 @@ variables:
     value: ubuntu-20.04
 
   # Maven
+  - name: maven_package_version
+    value: "${{ variables.version_major }}.${{ variables.version_minor }}.$(version_revision)-$(Build.SourceBranchName)"
   - name: maven_cache_directory
     value: "./.m2"
   - name: maven_surefire_reports_dir
@@ -129,7 +131,7 @@ variables:
 
   # Sonar
   - name: sonar_enable
-    value: false
+    value: true
   - name: sonar_container
     value: "sonar_scanner"
   - name: sonar_host_url
