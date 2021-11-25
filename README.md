@@ -45,10 +45,10 @@ deploy.
 
 There are four ways to integrate this module into your project:
 
--  Use it as a [dependency](#dependency)
+-  Use it as a [dependency](#use-it-as-a-dependency)
 -  Create a localized solution using [Maven Archetypes artifacts](#localized-solution-using-maven-archetypes) available in our Artifactory repo
--  Clone this repo, [locally build](#building-the-module-locally) and use it as a Maven dependency
--  Clone this repo, create a [custom archetype](#creating-an-archetype) and then use it as a Maven dependency
+-  Clone this repo, [locally build](#building-the-module-locally-from-this-repository) and use it as a Maven dependency
+-  Clone this repo, create a [custom archetype](#creating-an-archetype-from-this-repository) and then use it as a Maven dependency
 
 ### Use it as a dependency
 
@@ -102,7 +102,7 @@ To use the deployed archetypes:
 
     > For example, using `-DgroupId=com.test` and `-Dpackage=com.test.stacks` will instruct Maven to place the code in `src/main/java/com/test/stacks` and update all the relevant references accordingly (i.e. `imports`)
 
-3.  Go to the `pom.xml` file of the project you'll be using this module in and add it as a [dependency](#dependency)
+3.  Go to the `pom.xml` file of the project you'll be using this module in and add it as a [dependency](#use-it-as-a-dependency)
 
 **Example**: Using `-DgroupId=com.test` and `-Dpackage=com.test.stacks` will instruct Maven to place the code in `src/main/java/com/test/stacks` and update all the relevant references accordingly (i.e. `imports`)
 
@@ -123,7 +123,7 @@ To build the module locally:
 1.  Clone this repo
 2.  Navigate to the `java` folder
 3.  run `./mvnw clean install` to install the module locally.
-4.  Add it as any other [dependency](#dependency)
+4.  Add it as any other [dependency](#use-it-as-a-dependency)
 
 ### Creating an Archetype from this repository
 
@@ -173,7 +173,7 @@ To build, install and use the archetype follow these steps:
     3.  `<your-version>` is a placeholder for your version
     4.  `<package-name>` is a placeholder for the root package name and structure. It should start with your `groupdId` and continue with the name of the root package.
     > For example, using `-DgroupId=com.test` and `-Dpackage=com.test.stacks` will instruct Maven to place the code in `src/main/java/com/test/stacks` and update all the relevant references accordingly (i.e. `imports`)
-6.  Go to the `pom.xml` file of the project you'll be using this module in and add it as a [dependency](#dependency)
+6.  Go to the `pom.xml` file of the project you'll be using this module in and add it as a [dependency](#use-it-as-a-dependency)
 
 **Example**: Using `-DgroupId=com.test` and `-Dpackage=com.test.stacks` will instruct Maven to place the code in `src/main/java/com/test/stacks` and update all the relevant references accordingly (i.e. `imports`)
 
