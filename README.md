@@ -150,6 +150,7 @@ To use the deployed archetypes:
 >
 >-  Update them manually
 >-  Re-create the relevant `import` statements to use the new-made module instead.
+>-  If you plan to use this with Amido Stacks, include your namespace in the `@ComponentScan` annotation of the `Application` class.
 
 ### Building the module locally
 
@@ -219,3 +220,4 @@ To build, install and use the archetype follow these steps:
 >
 >-  Update them manually
 >-  Re-create the relevant `import` statements to use the new-made module instead.
+>-  If you plan to use this with Amido Stacks, include your namespace in the `@ComponentScan` annotation of the `Application` class.
