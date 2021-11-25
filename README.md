@@ -147,7 +147,7 @@ To make, install and use an archetype follow these steps:
     3. `<your-version>` is a placeholder for your version
     4. `<package-name>` is a placeholder for the root package name and structure. It should start with your `groupdId` and continue with the name of the root package.
         1. For example, using `-DgroupId=com.test` and `-Dpackage=com.test.stacks` will instruct Maven to place the code in `src/main/java/com/test/stacks` and update all the relevant references accordingly (i.e. `imports`)
-6. Go to the `pom.xml` file of the project you'll be using this module in and add it as a [Maven
+7. Go to the `pom.xml` file of the project you'll be using this module in and add it as a [Maven
    dependency](#maven-dependency)
 
 **Example**: Using `-DgroupId=com.test` and `-Dpackage=com.test.stacks` will instruct Maven to place the code in `src/main/java/com/test/stacks` and update all the relevant references accordingly (i.e. `imports`)
