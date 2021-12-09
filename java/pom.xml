@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.amido.stacks.modules</groupId>
         <artifactId>stacks-modules-parent</artifactId>
-        <version>1.0.0</version>
+        <version>0.0.2.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>stacks-core-api</artifactId>
@@ -23,7 +23,7 @@
             <url>https://amidostacks.jfrog.io/artifactory/default-maven-virtual</url>
         </repository>
     </repositories>
-
+    
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -37,6 +37,17 @@
             <groupId>com.auth0</groupId>
             <artifactId>auth0-spring-security-api</artifactId>
         </dependency>
+
+        <!-- Dependencies added to avoid https://app.snyk.io/vuln/SNYK-JAVA-CHQOSLOGBACK-1726923 -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+        
     </dependencies>
 
     <build>
