@@ -143,6 +143,9 @@ stages:
               functional_test_project_type: "${{ variables.functional_test_project_type }}"
               # Coverage test
               coverage_test: ${{ variables.coverage_test }}
+              # Docker
+              docker_build_container: "${{ variables.docker_java_image }}"
+
 
       # Build, test and deploy to an artifact repository the archetype based on the Java module
       - job: ArchetypeBuild
