@@ -13,47 +13,13 @@
 
   <servers>
     <server>
-      <id>stacks.releases</id>
-      <username>${artifactory.username}</username>
-      <password>${artifactory.password}</password>
-    </server>
-    <server>
-      <id>stacks.snapshots</id>
-      <username>${artifactory.username}</username>
-      <password>${artifactory.password}</password>
-    </server>
-    <server>
-      <id>central</id>
-      <username>${artifactory.username}</username>
-      <password>${artifactory.password}</password>
-    </server>
-    <server>
-      <id>snapshots</id>
-      <username>${artifactory.username}</username>
-      <password>${artifactory.password}</password>
+      <id>ossrh</id>
+      <username>${ossrh.jira.id}</username>
+      <password>${ossrh.jira.password}</password>
     </server>
   </servers>
 
   <mirrors>
   </mirrors>
-
-  <profiles>
-
-    <profile>
-      <repositories>
-        <repository>
-          <snapshots/>
-          <id>snapshots</id>
-          <name>default-maven-virtual</name>
-          <url>https://amidostacks.jfrog.io/artifactory/default-maven-virtual</url>
-        </repository>
-      </repositories>
-      <id>artifactory</id>
-    </profile>
-  </profiles>
-
-  <activeProfiles>
-    <activeProfile>artifactory</activeProfile>
-  </activeProfiles>
 
 </settings>
