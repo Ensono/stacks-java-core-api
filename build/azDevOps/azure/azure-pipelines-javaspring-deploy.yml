@@ -34,9 +34,6 @@ resources:
     # Container for Java Build and Testing
     - container: azul_java
       image: amidostacks/runner-pwsh-java:0.3.94-main
-      volumes:
-        - "$(Build.ArtifactStagingDirectory)/${{ variables.vulnerability_scan_report }}"
-
 
     # Container for inlining Jacoco assets as Azure DevOps strips them
     # https://github.com/microsoft/azure-pipelines-tasks/issues/3027
