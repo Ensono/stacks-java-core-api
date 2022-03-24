@@ -35,7 +35,7 @@ resources:
     - container: azul_java
       image: amidostacks/runner-pwsh-java:0.3.94-main
       volumes:
-        - "$(Build.ArtifactStagingDirectory)"
+        - "$(Build.ArtifactStagingDirectory)/${{ variables.vulnerability_scan_report }}"
 
 
     # Container for inlining Jacoco assets as Azure DevOps strips them
