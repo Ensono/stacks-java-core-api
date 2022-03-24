@@ -124,7 +124,7 @@ variables:
   - name: vulnerability_scan
     value: true
   - name: vulnerability_scan_report
-    value: "java/target/dependency-check-report.html"
+    value: "target/dependency-check-report.html"
   - name: vulnerability_scan_fail_build_on_detection
     value: false
 
