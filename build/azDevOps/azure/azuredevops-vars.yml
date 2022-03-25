@@ -92,10 +92,7 @@ variables:
 
   # Maven
   - name: maven_package_version
-    ${{ if eq( variables['Build.SourceBranchName'], 'main' ) }}:
-      value: "${{ variables.version_major }}.${{ variables.version_minor }}.${{ variables.version_patch }}"
-    ${{ if ne( variables['Build.SourceBranchName'], 'main' ) }}:
-      value: "$(Build.BuildNumber)"
+    value: "$(Build.BuildNumber)"
   - name: maven_cache_directory
     value: "./.m2"
   - name: maven_surefire_reports_dir
