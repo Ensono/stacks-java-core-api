@@ -100,7 +100,6 @@ stages:
               gpg_private_key: "$(gpg-private-key)"
               vulnerability_scan_report: "${{ variables.vulnerability_scan_report }}"
 
-
           # Performs static code analysis, such as Sonar Cloud
           - template: azDevOps/azure/templates/steps/java/test-static-code-analysis.yml@templates
             parameters:
