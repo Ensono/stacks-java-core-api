@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -45,13 +44,6 @@ import java.lang.annotation.Target;
 @ApiResponse(
     responseCode = "403",
     description = "Forbidden, the user does not have permission to execute this operation",
-    content =
-        @Content(
-            mediaType = "application/json",
-            schema = @Schema(implementation = ErrorResponse.class)))
-@ApiResponse(
-    responseCode = "404",
-    description = "Resource not found",
     content =
         @Content(
             mediaType = "application/json",
