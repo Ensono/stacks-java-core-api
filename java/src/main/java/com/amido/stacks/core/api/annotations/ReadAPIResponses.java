@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @ApiResponse(
     responseCode = "404",
-    description = "Menu Not Found",
+    description = "Resource not found",
     content =
         @Content(
             mediaType = "application/json",
