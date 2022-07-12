@@ -42,6 +42,13 @@ import java.lang.annotation.Target;
             mediaType = "application/json",
             schema = @Schema(implementation = ErrorResponse.class)))
 @ApiResponse(
+    responseCode = "404",
+    description = "Resource not found",
+    content =
+        @Content(
+            mediaType = "application/json",
+            schema = @Schema(implementation = ErrorResponse.class)))
+@ApiResponse(
     responseCode = "409",
     description = "Conflict, an item already exists",
     content =
