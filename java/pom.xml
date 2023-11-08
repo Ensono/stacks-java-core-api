@@ -7,7 +7,7 @@
   <parent>
     <groupId>com.amido.stacks.modules</groupId>
     <artifactId>stacks-modules-parent</artifactId>
-    <version>2.0.3-RELEASE</version>
+    <version>2.0.7-RELEASE</version>
   </parent>
 
   <artifactId>stacks-core-api</artifactId>
@@ -15,48 +15,31 @@
   <name>stacks-core-api</name>
   <description>Core API components for the Java Stacks solution</description>
 
+  <properties>
+    <springdoc.openapi.version>2.2.0</springdoc.openapi.version>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
+
     <dependency>
       <groupId>org.springdoc</groupId>
-      <artifactId>springdoc-openapi-ui</artifactId>
+      <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+      <version>${springdoc.openapi.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.yaml</groupId>
+          <artifactId>snakeyaml</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
+
     <dependency>
       <groupId>com.auth0</groupId>
       <artifactId>auth0-spring-security-api</artifactId>
     </dependency>
-
-    <!-- Dependencies added to avoid https://app.snyk.io/vuln/SNYK-JAVA-CHQOSLOGBACK-1726923 -->
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-    </dependency>
-
   </dependencies>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-failsafe-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>integration-tests</id>
-            <goals>
-              <goal>integration-test</goal>
-              <goal>verify</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
-
 </project>
