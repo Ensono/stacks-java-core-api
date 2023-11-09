@@ -21,8 +21,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class ApiExceptionAdvice extends ResponseEntityExceptionHandler {
 
   @Override
-  protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-      HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+  protected ResponseEntity<Object> handleMethodArgumentNotValid(
+      MethodArgumentNotValidException ex,
+      HttpHeaders headers,
+      HttpStatusCode status,
+      WebRequest request) {
 
     var validationIssues = processFieldErrors(ex.getBindingResult().getFieldErrors());
     ErrorResponse response =

@@ -1,11 +1,11 @@
 package com.amido.stacks.core.api.filter;
 
-import java.io.IOException;
-import java.util.UUID;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.UUID;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.MDC;
 import org.springframework.core.annotation.Order;
