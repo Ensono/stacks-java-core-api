@@ -2,10 +2,10 @@ package com.amido.stacks.core.api.exception;
 
 public abstract class ApiException extends RuntimeException {
 
-  int operationCode;
-  String correlationId;
+  final int operationCode;
+  final String correlationId;
 
-  public ApiException(String message, int operationCode, String correlationId) {
+  protected ApiException(String message, int operationCode, String correlationId) {
     super(message);
     this.operationCode = operationCode;
     this.correlationId = correlationId;
