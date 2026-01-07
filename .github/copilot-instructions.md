@@ -6,21 +6,21 @@
 
 Controllers MUST follow the interface-first pattern. Define endpoints, mappings, and OpenAPI documentation in an interface, then implement it in a separate class.
 
-- **Interface**: `com.amido.stacks.core.api.auth.AuthController` (Annotated with `@RequestMapping`, `@Operation`)
-- **Implementation**: `com.amido.stacks.core.api.auth.impl.AuthControllerImpl` (Annotated with `@RestController`)
+- **Interface**: `com.ensono.stacks.core.api.auth.AuthController` (Annotated with `@RequestMapping`, `@Operation`)
+- **Implementation**: `com.ensono.stacks.core.api.auth.impl.AuthControllerImpl` (Annotated with `@RestController`)
 
 ### 2. Composable API Responses
 
 Use custom annotations to document common API responses instead of repeating `@ApiResponse` blocks.
 
 - Example: Use `@CreateAPIResponses` for standard 201, 400, 401, 403, 409 responses.
-- See: `com.amido.stacks.core.api.annotations.*`
+- See: `com.ensono.stacks.core.api.annotations.*`
 
 ### 3. Error Handling & DTOs
 
 - All error responses MUST return the `ErrorResponse` DTO.
 - Exceptions should be handled in `ApiExceptionAdvice` or specific implementations.
-- DTOs are bifurcated into `com.amido.stacks.core.api.dto.request` and `com.amido.stacks.core.api.dto.response`.
+- DTOs are bifurcated into `com.ensono.stacks.core.api.dto.request` and `com.ensono.stacks.core.api.dto.response`.
 - DTOs MUST use Lombok annotations (`@Data`, `@NoArgsConstructor`, `@AllArgsConstructor`) to reduce boilerplate.
 
 ### 4. Correlation Tracking
@@ -54,7 +54,7 @@ Endpoints and settings are managed via Spring properties:
 ## Standards
 
 - **Java Version**: 17 (Targeted in `pom.xml`)
-- **Package Base**: `com.amido.stacks.core.api`
+- **Package Base**: `com.ensono.stacks.core.api`
 - **Documentation**: All public API methods MUST use `io.swagger.v3.oas.annotations` for documentation.
 
 ## Security & Compliance

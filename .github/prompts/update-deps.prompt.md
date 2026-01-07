@@ -105,15 +105,6 @@ FINAL REPORT BACK TO ME ==================================== Provide:
 
 Important rules:
 
-- Do NOT update major versions without explicit approval, unless you can implement fixes to breaking
-  changes.
-- Do NOT add or remove dependencies unless required by an update.
-- Ask clarifying questions EARLY.
-- Keep changes minimal, explicit, and reversible.
-- Any follow-up actions (e.g. optional major updates not yet applied).
-
-Important rules:
-
 - Do NOT update major versions without explicit approval, unless you can implement fixes to breaking changes.
 - Do NOT add or remove dependencies unless required by an update.
 - Ask clarifying questions EARLY.

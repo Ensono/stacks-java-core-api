@@ -23,6 +23,7 @@
       "args": ["-y", "@azure-devops/mcp", "${input:ado_org}"]
     },
     "azure": {
+      "type": "stdio",
       "command": "npx",
       "args": ["-y", "@azure/mcp@latest", "server", "start"]
     },
