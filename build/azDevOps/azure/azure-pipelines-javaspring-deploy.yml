@@ -55,7 +55,7 @@ stages:
       - group: stacks-credentials-nonprod-kv
       - group: stacks-java-modules
       - group: stacks-java-api
-      - group: sonar-credentials      
+      - group: sonar-credentials
     jobs:
       # Compile, test and deploy to an artifact repository the Java module
       - job: ModuleBuild
