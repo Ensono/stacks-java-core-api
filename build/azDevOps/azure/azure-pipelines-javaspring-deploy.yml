@@ -28,7 +28,7 @@ resources:
       ref: feature/cycle4
       # EXCHANGE THIS FOR YOUR OWN ENDPOINT CONNECTION TO GITHUB
       # REPOSITORY IS PUBLIC
-      endpoint: amidostacks
+      endpoint: ensonostacks
 
   containers:
     # Container for Java Build and Testing
