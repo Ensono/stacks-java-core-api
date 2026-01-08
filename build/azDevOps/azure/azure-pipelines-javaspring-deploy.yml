@@ -32,8 +32,10 @@ resources:
 
   containers:
     # Container for Java Build and Testing
-    # Container for Sonar Scanner
     - container: azul_java
+      image: ensono/eir-java:1.1.251
+    # Container for Sonar Scanner
+    - container: sonar_scanner
       image: ensono/eir-java:1.1.251
     # Container for inlining Jacoco assets as Azure DevOps strips them
     # https://github.com/microsoft/azure-pipelines-tasks/issues/3027
