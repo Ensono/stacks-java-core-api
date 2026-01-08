@@ -51,8 +51,8 @@ stages:
     variables:
       # You can find notes in the READMEs around which values to use for each ENV variable group
       - group: stacks-credentials-nonprod-kv
-      - group: amido-stacks-java-modules
-      - group: amido-stacks-java-modules-api
+      - group: stacks-java-modules
+      - group: stacks-java-api
     jobs:
       # Compile, test and deploy to an artifact repository the Java module
       - job: ModuleBuild
@@ -174,4 +174,3 @@ stages:
                 -A "${{ variables.maven_archetype_properties_file }}"
                 -Z "${{ variables.maven_cache_directory }}"
               workingDirectory: "$(Build.SourcesDirectory)/${{ variables.self_repo_dir }}"
-
