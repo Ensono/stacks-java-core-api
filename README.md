@@ -64,7 +64,7 @@ In the `dependencies` section of your application's `pom.xml` add:
 </dependency>
 ```
 
-Then you can do a `./mvnw clean compile` to fetch it; after that, you can use it like any other dependency.
+Then you can do a `./mvnw clean compile` to fetch it; after that, you can use it like you would any other dependency.
 
 ```bash
 ./mvnw clean compile
