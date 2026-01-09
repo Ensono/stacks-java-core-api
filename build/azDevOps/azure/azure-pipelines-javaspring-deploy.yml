@@ -178,4 +178,4 @@ stages:
               arguments: >
                 -A "${{ variables.maven_archetype_properties_file }}"
                 -Z "${{ variables.maven_cache_directory }}"
-              workingDirectory: "${{ variables.self_repo_dir }}"
+              workingDirectory: "${{ variables.self_project_dir }}"
