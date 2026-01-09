@@ -65,6 +65,7 @@ stages:
           - checkout: self
 
           - checkout: templates
+            path: s/stacks-pipeline-templates
 
           # Validates all YAML files in the repo to check they adhere to standards
           - template: azDevOps/azure/templates/steps/java/test-validate-yaml.yml@templates
@@ -158,6 +159,7 @@ stages:
           - checkout: self
 
           - checkout: templates
+            path: s/stacks-pipeline-templates
 
           # Validates all YAML files in the repo to check they adhere to standards
           - template: azDevOps/azure/templates/steps/java/test-validate-yaml.yml@templates
@@ -172,7 +174,7 @@ stages:
             displayName: 'Build Maven Archetype'
             inputs:
               targetType: 'filePath'
-              filePath: '$(Build.SourcesDirectory)/templates/scripts/build-maven-archetype.bash'
+              filePath: '${{ variables.self_pipeline_scripts_dir }}/build-maven-archetype.bash'
               arguments: >
                 -A "${{ variables.maven_archetype_properties_file }}"
                 -Z "${{ variables.maven_cache_directory }}"
