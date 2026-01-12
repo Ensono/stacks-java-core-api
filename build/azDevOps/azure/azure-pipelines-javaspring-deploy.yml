@@ -28,22 +28,22 @@ resources:
       ref: feature/cycle4
       # EXCHANGE THIS FOR YOUR OWN ENDPOINT CONNECTION TO GITHUB
       # REPOSITORY IS PUBLIC
-      endpoint: amidostacks
+      endpoint: ensonostacks
 
   containers:
     # Container for Java Build and Testing
     - container: azul_java
-      image: amidostacks/runner-pwsh-java:0.4.48-stable
+      image: ensono/eir-java:1.1.251
+    # Container for Sonar Scanner
+    - container: sonar_scanner
+      image: ensono/eir-java:1.1.251
     # Container for inlining Jacoco assets as Azure DevOps strips them
     # https://github.com/microsoft/azure-pipelines-tasks/issues/3027
     - container: node
-      image: amidostacks/node-14:0.0.1
-    # Container for Sonar Scanner
-    - container: sonar_scanner
-      image: amidostacks/ci-sonarscanner:0.0.2
+      image: ensono/eir-nodejs:1.1.251
     # Container for Kubernetes Deployment
     - container: k8s_deploy
-      image: amidostacks/ci-k8s:0.0.12
+      image: ensono/eir-infrastructure:1.1.251
 
 variables:
   - template: azuredevops-vars.yml
@@ -53,8 +53,9 @@ stages:
     variables:
       # You can find notes in the READMEs around which values to use for each ENV variable group
       - group: stacks-credentials-nonprod-kv
-      - group: amido-stacks-java-modules
-      - group: amido-stacks-java-modules-api
+      - group: stacks-java-modules
+      - group: stacks-java-api
+      - group: sonar-credentials
     jobs:
       # Compile, test and deploy to an artifact repository the Java module
       - job: ModuleBuild
@@ -64,6 +65,7 @@ stages:
           - checkout: self
 
           - checkout: templates
+            path: s/stacks-pipeline-templates
 
           # Validates all YAML files in the repo to check they adhere to standards
           - template: azDevOps/azure/templates/steps/java/test-validate-yaml.yml@templates
@@ -116,7 +118,7 @@ stages:
               sonar_project_name: "$(SONAR_PROJECT_NAME)"
               sonar_project_key: "$(SONAR_PROJECT_KEY)"
               sonar_token: "$(SONAR_TOKEN)"
-              sonar_organisation: "$(SONAR_ORGANIZATION)"
+              sonar_organisation: "$(SONAR_ORGANISATION)"
               # Probably `GitHub` or `vsts`
               sonar_pullrequest_provider: "GitHub"
               sonar_remote_repo: "${{ variables.self_remote_repo }}"
@@ -157,6 +159,7 @@ stages:
           - checkout: self
 
           - checkout: templates
+            path: s/stacks-pipeline-templates
 
           # Validates all YAML files in the repo to check they adhere to standards
           - template: azDevOps/azure/templates/steps/java/test-validate-yaml.yml@templates
@@ -167,30 +170,12 @@ stages:
               yamllint_scan_directory: "${{ variables.yamllint_scan_directory }}"
 
           # Builds the Java archetype and deploy to the artifact repository
-          - template: azDevOps/azure/templates/steps/java/build-java-archetype.yml@templates
-            parameters:
-              repo_root_dir: "${{ variables.self_repo_dir }}"
-              project_root_dir: "${{ variables.self_project_dir }}"
-              pipeline_scripts_directory: "${{ variables.self_pipeline_scripts_dir }}"
-              # Maven
-              maven_cache_directory: "${{ variables.maven_cache_directory }}"
-              maven_surefire_reports_dir: "${{ variables.maven_surefire_reports_dir }}"
-              maven_allowed_test_tags: "${{ variables.maven_allowed_test_tags}}"
-              maven_package_version: "${{ variables.maven_package_version }}"
-              maven_pom_file: "${{ variables.maven_archetype_pom_file }}"
-              maven_archetype_properties_file: "${{ variables.maven_archetype_properties_file }}"
-              maven_settings_file: "${{ variables.maven_settings_file }}"
-              maven_repository_server: "${{ variables.maven_repository_server }}"
-              # OSSRH
-              ossrh_jira_id: "$(ossrh-jira-id)"
-              ossrh_jira_password: "$(ossrh-jira-password)"
-              # Docker
-              docker_build_container: "${{ variables.docker_java_image }}"
-              # Vulnerability Scanning
-              vulnerability_scan: "${{ variables.vulnerability_scan }}"
-              vulnerability_scan_fail_build_on_detection: "${{ variables.vulnerability_scan_fail_build_on_detection }}"
-              project_type: "${{ variables.java_project_type }}"
-              build_type: "${{ variables.build_type }}"
-              # private  key id  to sign doc
-              gpg_key_signing_id: "$(gpg-key-signing-id)"
-              gpg_private_key: "$(gpg-private-key)"
+          - task: Bash@3
+            displayName: 'Build Maven Archetype'
+            inputs:
+              targetType: 'filePath'
+              filePath: '${{ variables.self_pipeline_scripts_dir }}/build-maven-archetype.bash'
+              arguments: >
+                -A "${{ variables.maven_archetype_properties_file }}"
+                -Z "${{ variables.maven_cache_directory }}"
+              workingDirectory: "${{ variables.self_project_dir }}"

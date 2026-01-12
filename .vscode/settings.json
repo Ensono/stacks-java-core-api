@@ -1,0 +1,7 @@
+{
+  "java.configuration.updateBuildConfiguration": "interactive",
+  "debug.javascript.autoAttachFilter": "disabled",
+  "chat.tools.terminal.autoApprove": {
+    "git config": true
+  }
+}
