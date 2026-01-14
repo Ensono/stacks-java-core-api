@@ -89,6 +89,7 @@ stages:
               maven_package_version: "${{ variables.maven_package_version }}"
               maven_settings_file: "${{ variables.maven_settings_file }}"
               # MAVEN CENTRAL
+              maven_repository_server: "${{ variables.maven_repository_server }}"
               maven_id: "$(MAVEN_ID)"
               maven_username: "$(MAVEN_USERNAME)"
               maven_password: "$(MAVEN_PASSWORD)"
