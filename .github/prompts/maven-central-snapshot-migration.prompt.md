@@ -1,6 +1,6 @@
 ---
 agent: agent
-name: Ensono Maven Central Migration
+name: migrate-to-maven-central
 model: Auto (copilot)
 description: Switch to SNAPSHOTs and the Maven Central Publisher Portal
 ---
@@ -327,7 +327,26 @@ Maven Central Portal URLs:
 > However, it provides flexibility to switch between SNAPSHOT and release URLs
 > based on the branch without modifying the POM.
 
-### 6.3 Pipeline Structure: Separate Build and Deploy Steps
+### 6.3 Configure Repository Checkout
+
+Ensure the pipeline checks out both the project repository and the templates repository correctly:
+
+```yaml
+- job: ModuleBuild
+  pool:
+    vmImage: $(pool_vm_image)
+  steps:
+    - checkout: self
+      fetchDepth: 0
+
+    - checkout: templates
+```
+
+**Important:**
+- `fetchDepth: 0` fetches the full git history (required for GitHub Release generation)
+- `checkout: templates` uses the default path - do NOT specify `path: s/stacks-pipeline-templates` explicitly
+
+### 6.4 Pipeline Structure: Separate Build and Deploy Steps
 
 The pipeline must use **separate steps** for building and deploying. The
 `build-java.yml` template handles compilation and testing, while
@@ -389,7 +408,9 @@ The pipeline must use **separate steps** for building and deploying. The
 
 ---
 
-## Step 7: Update Pipeline Build Type
+## Step 7: Update Pipeline Build Type and Name Format
+
+### 7.1 Update Build Type Variable
 
 Change from `SNAPSHOT`/`RELEASE` pattern to simpler versioning:
 
@@ -412,6 +433,24 @@ Change from `SNAPSHOT`/`RELEASE` pattern to simpler versioning:
   ${{ else }}:
     value: "-SNAPSHOT"
 ```
+
+### 7.2 Fix Pipeline Build Name Format
+
+Update the pipeline `name` property to avoid double dashes in SNAPSHOT versions:
+
+**Before:**
+
+```yaml
+name: $(version_major).$(version_minor).$(version_patch).$(Rev:r)-$(build_type)
+```
+
+**After:**
+
+```yaml
+name: $(version_major).$(version_minor).$(version_patch).$(Rev:r)$(build_type)
+```
+
+**Why:** The old format produced versions like `1.0.5.32--SNAPSHOT` (double dash) because it concatenated `-` with `-SNAPSHOT`. The new format produces correct versions like `1.0.5.32-SNAPSHOT` or `1.0.5.32` (for releases).
 
 > **Important**: The `-SNAPSHOT` suffix is required for non-release builds. See
 > [Step 12: SNAPSHOT Publishing](#step-12-snapshot-publishing) for mandatory
@@ -521,8 +560,9 @@ Ensure all these files have been checked and updated where necessary:
 
 ### Required Updates
 
-- [ ] `pom.xml` - groupId, metadata, plugins, `-SNAPSHOT` version suffix
+- [ ] `pom.xml` - groupId, metadata, plugins, `-SNAPSHOT` version suffix, `<distributionManagement>` section
 - [ ] All `*.java` files - package declarations and imports
+- [ ] Azure DevOps pipeline - build name format (remove hardcoded `-` before `$(build_type)`)
 - [ ] Azure DevOps `maven-credentials` variable group - `MAVEN_ID`,
       `MAVEN_USERNAME`, `MAVEN_PASSWORD`
 - [ ] `README.md` - dependency coordinates
@@ -568,10 +608,9 @@ to the correct location.
 > **Note**: No additional plugin configuration is required - the plugin detects
 > `-SNAPSHOT` versions automatically.
 
-### 12.3 Alternative: Manual Distribution Management (pom.xml)
+### 12.3 Add Distribution Management (pom.xml)
 
-If you prefer explicit configuration in `pom.xml` instead of relying on pipeline
-variables, add this to your `pom.xml`:
+**Required:** Add the `<distributionManagement>` section to your `pom.xml` to tell Maven where to upload artifacts:
 
 ```xml
 <distributionManagement>
@@ -586,10 +625,9 @@ variables, add this to your `pom.xml`:
 </distributionManagement>
 ```
 
-> **Important**: The `central-publishing-maven-plugin` handles the API path
-> internally. Use the base URL `https://central.sonatype.com` for releases and
-> `https://central.sonatype.com/repository/maven-snapshots/` for snapshots - do
-> NOT include `/api/v1/publisher` or other API path suffixes.
+> **Important**: Without this configuration, the `central-publishing-maven-plugin` will stage artifacts locally but NOT upload them to Maven Central. The plugin will run in "deferred mode" and artifacts will only be saved to `target/central-deferred/`.
+
+> **Note**: The `central-publishing-maven-plugin` handles the API path internally. Use the base URL `https://central.sonatype.com` for releases and `https://central.sonatype.com/repository/maven-snapshots/` for snapshots - do NOT include `/api/v1/publisher` or other API path suffixes.
 
 ### 12.4 Consumer Configuration
 
@@ -662,6 +700,43 @@ same version. Increment your version number.
 ```bash
 rm -rf ~/.m2/repository/com/amido
 ./mvnw clean install
+```
+
+### Issue: Plugin Runs But Doesn't Upload (Deferred Mode)
+
+**Symptoms**: Build succeeds, plugin shows "Installing" to `target/central-deferred/`, but artifacts never appear on Maven Central.
+
+**Root Cause**: Missing `<distributionManagement>` configuration in `pom.xml`.
+
+**Solution**: Add the distribution management section to your `pom.xml` (see Step 12.3):
+
+```xml
+<distributionManagement>
+  <snapshotRepository>
+    <id>central</id>
+    <url>https://central.sonatype.com/repository/maven-snapshots/</url>
+  </snapshotRepository>
+  <repository>
+    <id>central</id>
+    <url>https://central.sonatype.com</url>
+  </repository>
+</distributionManagement>
+```
+
+### Issue: Double Dash in Version (e.g., 1.0.5.32--SNAPSHOT)
+
+**Symptoms**: Artifacts are deployed with versions like `1.0.5.32--SNAPSHOT` instead of `1.0.5.32-SNAPSHOT`.
+
+**Root Cause**: Pipeline `name` format includes a hardcoded `-` that gets concatenated with `-SNAPSHOT`.
+
+**Solution**: Update the pipeline name format (see Step 7.2):
+
+```yaml
+# Change from:
+name: $(version_major).$(version_minor).$(version_patch).$(Rev:r)-$(build_type)
+
+# To:
+name: $(version_major).$(version_minor).$(version_patch).$(Rev:r)$(build_type)
 ```
 
 ---
