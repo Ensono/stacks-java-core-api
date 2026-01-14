@@ -56,6 +56,7 @@ stages:
       - group: stacks-java-modules
       - group: stacks-java-api
       - group: sonar-credentials
+      - group: maven-credentials
     jobs:
       # Compile, test and deploy to an artifact repository the Java module
       - job: ModuleBuild
@@ -87,9 +88,10 @@ stages:
               maven_allowed_test_tags: "${{ variables.maven_allowed_test_tags}}"
               maven_package_version: "${{ variables.maven_package_version }}"
               maven_settings_file: "${{ variables.maven_settings_file }}"
-              # OSSRH
-              ossrh_jira_id: "$(ossrh-jira-id)"
-              ossrh_jira_password: "$(ossrh-jira-password)"
+              # MAVEN CENTRAL
+              maven_id: "$(MAVEN_ID)"
+              maven_username: "$(MAVEN_USERNAME)"
+              maven_password: "$(MAVEN_PASSWORD)"
               # Docker
               docker_build_container: "${{ variables.docker_java_image }}"
               # Vulnerability Scanning

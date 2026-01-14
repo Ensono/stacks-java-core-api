@@ -1,4 +1,4 @@
-package com.amido.stacks.core.api.filter;
+package com.ensono.stacks.core.api.filter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

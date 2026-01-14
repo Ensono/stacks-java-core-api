@@ -3,5 +3,18 @@
   "debug.javascript.autoAttachFilter": "disabled",
   "chat.tools.terminal.autoApprove": {
     "git config": true
-  }
+  },
+  "cSpell.words": [
+    "customise",
+    "Darchetype",
+    "Dartifact",
+    "Dgroup",
+    "Dpackage",
+    "Dproperty",
+    "Dversion",
+    "gpgconf",
+    "mvnw",
+    "organisation's",
+    "OSSRH"
+  ]
 }

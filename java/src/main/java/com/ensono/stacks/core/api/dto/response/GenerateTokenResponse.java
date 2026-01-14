@@ -1,4 +1,4 @@
-package com.amido.stacks.core.api.dto.response;
+package com.ensono.stacks.core.api.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

@@ -1,9 +1,9 @@
-package com.amido.stacks.core.api.auth;
+package com.ensono.stacks.core.api.auth;
 
-import com.amido.stacks.core.api.dto.ErrorResponse;
-import com.amido.stacks.core.api.dto.request.GenerateTokenRequest;
-import com.amido.stacks.core.api.dto.response.GenerateTokenResponse;
-import com.amido.stacks.core.api.dto.response.ResourceCreatedResponse;
+import com.ensono.stacks.core.api.dto.ErrorResponse;
+import com.ensono.stacks.core.api.dto.request.GenerateTokenRequest;
+import com.ensono.stacks.core.api.dto.response.GenerateTokenResponse;
+import com.ensono.stacks.core.api.dto.response.ResourceCreatedResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

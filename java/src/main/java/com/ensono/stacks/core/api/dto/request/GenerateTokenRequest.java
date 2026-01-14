@@ -1,4 +1,4 @@
-package com.amido.stacks.core.api.dto.request;
+package com.ensono.stacks.core.api.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;

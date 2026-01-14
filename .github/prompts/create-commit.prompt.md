@@ -9,7 +9,9 @@ model: GPT-5 mini (copilot)
 
 ## Purpose
 
-This prompt guides an AI agent to create clean, comprehensive, and conventional commits that adhere to project security guidelines. It includes GPG signing verification, pre-commit hook handling, and failure diagnosis.
+This prompt guides an AI agent to create clean, comprehensive, and conventional
+commits that adhere to project security guidelines. It includes GPG signing
+verification, pre-commit hook handling, and failure diagnosis.
 
 ## Prerequisites
 
@@ -177,7 +179,8 @@ Analyze the changed files to determine:
 **Bad examples**:
 
 - `Fixed bug` (too vague, wrong tense)
-- `Updated the authentication controller to support new tokens.` (too long, has period)
+- `Updated the authentication controller to support new tokens.` (too long, has
+  period)
 - `WIP` (not descriptive)
 
 ### 3.4 Body Guidelines
@@ -428,7 +431,8 @@ If pre-commit hooks fail repeatedly after multiple fix attempts:
 1. **Document all attempted fixes**
 2. **Report specific error messages** to user
 3. **Suggest manual review** of hook configuration
-4. **Do NOT bypass hooks** without explicit user approval and documented justification
+4. **Do NOT bypass hooks** without explicit user approval and documented
+   justification
 
 ### Commit Rejected by Remote
 
