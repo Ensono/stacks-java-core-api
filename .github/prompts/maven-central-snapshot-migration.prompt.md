@@ -305,7 +305,24 @@ stages:
       # ...
 ```
 
-### 6.2 Pass Credentials to Deploy Template
+### 6.2 Configure Maven Repository Server URLs
+
+Update the `maven_repository_server` variable in Azure DevOps to use the correct
+Maven Central Portal URLs:
+
+```yaml
+- name: maven_repository_server
+  ${{ if eq( variables['Build.SourceBranchName'], 'main' ) }}:
+    value: central::https://central.sonatype.com
+  ${{ if ne( variables['Build.SourceBranchName'], 'main' ) }}:
+    value: central::https://central.sonatype.com/repository/maven-snapshots/
+```
+
+> **Important**: The `central-publishing-maven-plugin` handles the API path
+> internally. Do NOT include `/api/v1/publisher` or other path suffixes - use
+> the base URLs shown above.
+
+### 6.3 Pass Credentials to Deploy Template
 
 The `stacks-pipeline-templates` deploy step accepts these parameters and
 generates the Maven `settings.xml` at runtime:
@@ -318,6 +335,7 @@ generates the Maven `settings.xml` at runtime:
     maven_id: "$(MAVEN_ID)"
     maven_username: "$(MAVEN_USERNAME)"
     maven_password: "$(MAVEN_PASSWORD)"
+    maven_repository_server: "$(maven_repository_server)"
 ```
 
 The pipeline template generates a `settings.xml` file during the build, ensuring
@@ -504,10 +522,10 @@ to the correct location.
 > **Note**: No additional plugin configuration is required - the plugin detects
 > `-SNAPSHOT` versions automatically.
 
-### 12.3 Alternative: Manual Distribution Management
+### 12.3 Alternative: Manual Distribution Management (pom.xml)
 
-If you prefer explicit configuration or use other tools, add this to your
-`pom.xml`:
+If you prefer explicit configuration in `pom.xml` instead of relying on pipeline
+variables, add this to your `pom.xml`:
 
 ```xml
 <distributionManagement>
@@ -515,8 +533,17 @@ If you prefer explicit configuration or use other tools, add this to your
     <id>central</id>
     <url>https://central.sonatype.com/repository/maven-snapshots/</url>
   </snapshotRepository>
+  <repository>
+    <id>central</id>
+    <url>https://central.sonatype.com</url>
+  </repository>
 </distributionManagement>
 ```
+
+> **Important**: The `central-publishing-maven-plugin` handles the API path
+> internally. Use the base URL `https://central.sonatype.com` for releases and
+> `https://central.sonatype.com/repository/maven-snapshots/` for snapshots - do
+> NOT include `/api/v1/publisher` or other API path suffixes.
 
 ### 12.4 Consumer Configuration
 

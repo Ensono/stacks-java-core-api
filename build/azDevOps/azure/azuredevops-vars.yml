@@ -107,7 +107,7 @@ variables:
     value: "./.mvn/settings.xml"
   - name: maven_repository_server
     ${{ if eq( variables['Build.SourceBranchName'], 'main' ) }}:
-      value: central::https://central.sonatype.com/api/v1/publisher
+      value: central::https://central.sonatype.com
     ${{ if ne( variables['Build.SourceBranchName'], 'main' ) }}:
       value: central::https://central.sonatype.com/repository/maven-snapshots/
 
