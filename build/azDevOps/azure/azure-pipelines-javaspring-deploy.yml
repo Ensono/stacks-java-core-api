@@ -33,17 +33,17 @@ resources:
   containers:
     # Container for Java Build and Testing
     - container: azul_java
-      image: ensono/eir-java:1.1.251
+      image: ensono/eir-java:1.1.257
     # Container for Sonar Scanner
     - container: sonar_scanner
-      image: ensono/eir-java:1.1.251
+      image: ensono/eir-java:1.1.257
     # Container for inlining Jacoco assets as Azure DevOps strips them
     # https://github.com/microsoft/azure-pipelines-tasks/issues/3027
     - container: node
-      image: ensono/eir-nodejs:1.1.251
+      image: ensono/eir-nodejs:1.1.257
     # Container for Kubernetes Deployment
     - container: k8s_deploy
-      image: ensono/eir-infrastructure:1.1.251
+      image: ensono/eir-infrastructure:1.1.257
 
 variables:
   - template: azuredevops-vars.yml
@@ -76,7 +76,7 @@ stages:
               yamllint_config_file: "${{ variables.yamllint_config_file }}"
               yamllint_scan_directory: "${{ variables.yamllint_scan_directory }}"
 
-          # Builds the Java app, runs tests and deploy to the artifact repository
+          # Builds the Java app and runs tests
           - template: azDevOps/azure/templates/steps/java/build-java.yml@templates
             parameters:
               repo_root_dir: "${{ variables.self_repo_dir }}"
@@ -87,23 +87,14 @@ stages:
               maven_surefire_reports_dir: "${{ variables.maven_surefire_reports_dir }}"
               maven_allowed_test_tags: "${{ variables.maven_allowed_test_tags}}"
               maven_package_version: "${{ variables.maven_package_version }}"
-              maven_settings_file: "${{ variables.maven_settings_file }}"
-              # MAVEN CENTRAL
-              maven_repository_server: "${{ variables.maven_repository_server }}"
-              maven_id: "$(MAVEN_ID)"
-              maven_username: "$(MAVEN_USERNAME)"
-              maven_password: "$(MAVEN_PASSWORD)"
               # Docker
               docker_build_container: "${{ variables.docker_java_image }}"
               # Vulnerability Scanning
               vulnerability_scan: "${{ variables.vulnerability_scan }}"
               vulnerability_scan_fail_build_on_detection: "${{ variables.vulnerability_scan_fail_build_on_detection }}"
+              vulnerability_scan_report: "${{ variables.vulnerability_scan_report }}"
               project_type: "${{ variables.java_project_type }}"
               build_type: "${{ variables.build_type }}"
-              # private  key id  to sign doc
-              gpg_key_signing_id: "$(gpg-key-signing-id)"
-              gpg_private_key: "$(gpg-private-key)"
-              vulnerability_scan_report: "${{ variables.vulnerability_scan_report }}"
 
           # Performs static code analysis, such as Sonar Cloud
           - template: azDevOps/azure/templates/steps/java/test-static-code-analysis.yml@templates
@@ -128,6 +119,27 @@ stages:
               sonar_command: "${{ variables.sonar_command }}"
               # Docker
               docker_image_tag: "${{ variables.docker_image_tag }}"
+
+          # Deploy to the Maven Repository
+          - template: azDevOps/azure/templates/steps/java/deploy-java.yml@templates
+            parameters:
+              repo_root_dir: "${{ variables.self_repo_dir }}"
+              project_root_dir: "${{ variables.self_project_dir }}"
+              pom_dir: "${{ variables.self_project_dir }}"
+              pipeline_scripts_directory: "${{ variables.self_pipeline_scripts_dir }}"
+              # Docker
+              docker_build_container: "${{ variables.docker_java_image }}"
+              # Project
+              project_type: "${{ variables.java_project_type }}"
+              build_type: "${{ variables.build_type }}"
+              # MAVEN CENTRAL
+              maven_id: "$(MAVEN_ID)"
+              maven_username: "$(MAVEN_USERNAME)"
+              maven_password: "$(MAVEN_PASSWORD)"
+              maven_package_version: "${{ variables.maven_package_version }}"
+              # private key id to sign doc
+              gpg_key_signing_id: "$(gpg-key-signing-id)"
+              gpg_private_key: "$(gpg-private-key)"
 
           # Post build tasks, such as Test and Coverage upload, and publishing artefacts
           - template: azDevOps/azure/templates/steps/java/post-build-tasks.yml@templates
