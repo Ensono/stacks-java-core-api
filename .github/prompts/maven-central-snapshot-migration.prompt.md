@@ -322,24 +322,70 @@ Maven Central Portal URLs:
 > internally. Do NOT include `/api/v1/publisher` or other path suffixes - use
 > the base URLs shown above.
 
-### 6.3 Pass Credentials to Deploy Template
+> **Note**: This variable is now optional if you configure
+> `<distributionManagement>` directly in your `pom.xml` (see Step 12.3).
+> However, it provides flexibility to switch between SNAPSHOT and release URLs
+> based on the branch without modifying the POM.
 
-The `stacks-pipeline-templates` deploy step accepts these parameters and
-generates the Maven `settings.xml` at runtime:
+### 6.3 Pipeline Structure: Separate Build and Deploy Steps
+
+The pipeline must use **separate steps** for building and deploying. The
+`build-java.yml` template handles compilation and testing, while
+`deploy-java.yml` handles Maven Central publishing.
+
+**Correct pipeline structure:**
 
 ```yaml
+# Builds the Java app and runs tests
+- template: azDevOps/azure/templates/steps/java/build-java.yml@templates
+  parameters:
+    repo_root_dir: "${{ variables.self_repo_dir }}"
+    project_root_dir: "${{ variables.self_project_dir }}"
+    pipeline_scripts_directory: "${{ variables.self_pipeline_scripts_dir }}"
+    # Maven
+    maven_cache_directory: "${{ variables.maven_cache_directory }}"
+    maven_surefire_reports_dir: "${{ variables.maven_surefire_reports_dir }}"
+    maven_allowed_test_tags: "${{ variables.maven_allowed_test_tags}}"
+    maven_package_version: "${{ variables.maven_package_version }}"
+    # Docker
+    docker_build_container: "${{ variables.docker_java_image }}"
+    # Vulnerability Scanning
+    vulnerability_scan: "${{ variables.vulnerability_scan }}"
+    vulnerability_scan_fail_build_on_detection: "${{ variables.vulnerability_scan_fail_build_on_detection }}"
+    vulnerability_scan_report: "${{ variables.vulnerability_scan_report }}"
+    project_type: "${{ variables.java_project_type }}"
+    build_type: "${{ variables.build_type }}"
+
+# Performs static code analysis, such as Sonar Cloud
+- template: azDevOps/azure/templates/steps/java/test-static-code-analysis.yml@templates
+  parameters:
+    # ... sonar parameters ...
+
+# Deploy to the Maven Repository
 - template: azDevOps/azure/templates/steps/java/deploy-java.yml@templates
   parameters:
-    # ... other parameters ...
+    repo_root_dir: "${{ variables.self_repo_dir }}"
+    project_root_dir: "${{ variables.self_project_dir }}"
+    pom_dir: "${{ variables.self_project_dir }}"
+    pipeline_scripts_directory: "${{ variables.self_pipeline_scripts_dir }}"
+    # Docker
+    docker_build_container: "${{ variables.docker_java_image }}"
+    # Project
+    project_type: "${{ variables.java_project_type }}"
+    build_type: "${{ variables.build_type }}"
     # MAVEN CENTRAL
     maven_id: "$(MAVEN_ID)"
     maven_username: "$(MAVEN_USERNAME)"
     maven_password: "$(MAVEN_PASSWORD)"
-    maven_repository_server: "$(maven_repository_server)"
+    maven_package_version: "${{ variables.maven_package_version }}"
+    # private key id to sign doc
+    gpg_key_signing_id: "$(gpg-key-signing-id)"
+    gpg_private_key: "$(gpg-private-key)"
 ```
 
-The pipeline template generates a `settings.xml` file during the build, ensuring
-credentials are never stored in source control.
+> **Important**: Do NOT pass Maven Central credentials to `build-java.yml`. The
+> `deploy-java.yml` template generates the Maven `settings.xml` at runtime,
+> ensuring credentials are never stored in source control.
 
 ---
 
