@@ -1,8 +1,8 @@
-package com.amido.stacks.core.api.auth.impl;
+package com.ensono.stacks.core.api.auth.impl;
 
-import com.amido.stacks.core.api.auth.AuthController;
-import com.amido.stacks.core.api.dto.request.GenerateTokenRequest;
-import com.amido.stacks.core.api.dto.response.GenerateTokenResponse;
+import com.ensono.stacks.core.api.auth.AuthController;
+import com.ensono.stacks.core.api.dto.request.GenerateTokenRequest;
+import com.ensono.stacks.core.api.dto.response.GenerateTokenResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;

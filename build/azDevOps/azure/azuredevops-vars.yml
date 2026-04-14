@@ -2,7 +2,7 @@ variables:
   - name: region
     value: westeurope
   - name: company
-    value: amido
+    value: ensono
   - name: project
     value: stacks
   - name: domain
@@ -23,7 +23,7 @@ variables:
   # It is case sensitive for TFS based repos
 
   - name: self_remote_repo
-    value: "amido/$(self_repo)"
+    value: "Ensono/$(self_repo)"
   - name: self_repo_src
     value: java
   - name: self_post_deploy_test_src
@@ -55,9 +55,9 @@ variables:
     value: 5
   - name: build_type
     ${{ if eq( variables['Build.SourceBranchName'], 'main' ) }}:
-      value: "RELEASE"
+      value: ""
     ${{ if ne( variables['Build.SourceBranchName'], 'main' ) }}:
-      value: "SNAPSHOT"
+      value: "-SNAPSHOT"
 
   # PR / Branch vars
   - name: source_branch_ref
@@ -107,9 +107,9 @@ variables:
     value: "./.mvn/settings.xml"
   - name: maven_repository_server
     ${{ if eq( variables['Build.SourceBranchName'], 'main' ) }}:
-      value: ossrh::https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/
+      value: central::https://central.sonatype.com
     ${{ if ne( variables['Build.SourceBranchName'], 'main' ) }}:
-      value: ossrh::https://s01.oss.sonatype.org/content/repositories/snapshots
+      value: central::https://central.sonatype.com/repository/maven-snapshots/
 
   # Test
   - name: functional_test
@@ -153,4 +153,4 @@ variables:
   - name: github_release_service_connection
     value: GitHubReleases
   - name: github_org
-    value: $(company)
+    value: Ensono

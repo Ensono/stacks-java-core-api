@@ -1,7 +1,7 @@
-package com.amido.stacks.core.api.annotations;
+package com.ensono.stacks.core.api.annotations;
 
-import com.amido.stacks.core.api.dto.ErrorResponse;
-import com.amido.stacks.core.api.dto.response.ResourceUpdatedResponse;
+import com.ensono.stacks.core.api.dto.ErrorResponse;
+import com.ensono.stacks.core.api.dto.response.ResourceCreatedResponse;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -14,19 +14,12 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @ApiResponse(
-    responseCode = "200",
-    description = "Success",
+    responseCode = "201",
+    description = "Resource created",
     content =
         @Content(
             mediaType = "application/json",
-            schema = @Schema(implementation = ResourceUpdatedResponse.class)))
-@ApiResponse(
-    responseCode = "204",
-    description = "No Content",
-    content =
-        @Content(
-            mediaType = "application/json",
-            schema = @Schema(implementation = ErrorResponse.class)))
+            schema = @Schema(implementation = ResourceCreatedResponse.class)))
 @ApiResponse(
     responseCode = "400",
     description = "Bad Request",
@@ -49,13 +42,6 @@ import java.lang.annotation.Target;
             mediaType = "application/json",
             schema = @Schema(implementation = ErrorResponse.class)))
 @ApiResponse(
-    responseCode = "404",
-    description = "Resource not found",
-    content =
-        @Content(
-            mediaType = "application/json",
-            schema = @Schema(implementation = ErrorResponse.class)))
-@ApiResponse(
     responseCode = "409",
     description = "Conflict, an item already exists",
     content =
@@ -63,4 +49,4 @@ import java.lang.annotation.Target;
             mediaType = "application/json",
             schema = @Schema(implementation = ErrorResponse.class)))
 @SecurityRequirement(name = "bearerAuth")
-public @interface UpdateAPIResponses {}
+public @interface CreateAPIResponses {}

@@ -1,4 +1,4 @@
-package com.amido.stacks.core.api.dto;
+package com.ensono.stacks.core.api.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package com.amido.stacks.core.api.filter;
+package com.ensono.stacks.core.api.filter;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;

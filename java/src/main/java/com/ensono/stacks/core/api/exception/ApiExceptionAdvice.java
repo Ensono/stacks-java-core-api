@@ -1,9 +1,9 @@
-package com.amido.stacks.core.api.exception;
+package com.ensono.stacks.core.api.exception;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.web.context.request.RequestAttributes.SCOPE_REQUEST;
 
-import com.amido.stacks.core.api.dto.ErrorResponse;
+import com.ensono.stacks.core.api.dto.ErrorResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

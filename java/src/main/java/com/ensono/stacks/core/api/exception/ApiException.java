@@ -1,4 +1,4 @@
-package com.amido.stacks.core.api.exception;
+package com.ensono.stacks.core.api.exception;
 
 public abstract class ApiException extends RuntimeException {
 
