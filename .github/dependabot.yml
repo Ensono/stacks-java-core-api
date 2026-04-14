@@ -13,4 +13,6 @@ multi-ecosystem-groups:
 updates:
   - package-ecosystem: maven
     directory: /java
+    patterns:
+      - "*"
     multi-ecosystem-group: all-dependencies
